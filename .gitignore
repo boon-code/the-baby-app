@@ -106,3 +106,5 @@ hs_err_pid*
 local.properties
 
 .gradle
+
+!gradle/wrapper/*
