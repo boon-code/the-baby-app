@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- old color style
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    -->
+
+    <color name="colorPrimary">@color/colorBabyOrange</color>
+    <color name="colorPrimaryDark">#A76E20</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <!-- Baby colors for icons -->
+    <color name="colorBabyYellow">#E6E822</color>
+    <color name="colorBabyOrange">#E1932D</color>
+</resources>

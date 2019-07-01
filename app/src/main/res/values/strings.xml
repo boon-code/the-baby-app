@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">The Baby App</string>
+    <string name="tab1_title">Main</string>
+    <string name="tab2_title">Nursing times</string>
+    <string name="tab3_title">Diaper changes</string>
+    <string name="nurse_started">Started</string>
+    <string name="nurse_stopped">Stopped</string>
+    <string name="nurse_start">Start</string>
+    <string name="nurse_stop">Stop</string>
+</resources>
