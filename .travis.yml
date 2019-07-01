@@ -2,31 +2,45 @@ language: android
 sudo: required
 jdk: oraclejdk8
 before_cache:
- - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
- - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+- rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
- directories:
- - $HOME/.gradle/caches/
- - $HOME/.gradle/wrapper/
+  directories:
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
 env:
- global:
- - ANDROID_API=21
- - ANDROID_BUILD_TOOLS=29.0.0
- - ADB_INSTALL_TIMEOUT=5 # minutes
+  global:
+  - ANDROID_API=21
+  - ANDROID_BUILD_TOOLS=29.0.0
+  - ADB_INSTALL_TIMEOUT=5
+  - ZIPALIGN=${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/zipalign
+  - secure: ZAXV79sfWMj03S0gefNxu++XN3paGIIB/7+fgR+2sXnvD4lW868sy93xlTr9sxUZOmuHlWVhIuE4xjNpW5MTVB/Na3veWVPQ0MscjMHONmYTi17/tnQFCQs7LWuQN/qz+DgeAEL8dERGaaLxpBnNZY02KoZPNaYuBiaM8W4kYm182DBQraBDfFTIG4HunVV9x4tRbefvJ75PpCSfB4whr5+AVnTckLJ6ZL4Es+TH90FtIXAC+wYHGK9kjZNJRW0eAutjMG5jZOv9d2R5j0sGKt/eKdI1rhJyY+QrQ41plkiMpK0rjb6wPJdfEzCXNX73PuKZTlJUyXp1SuLc+SQMPgkgYv5GF89aIYzlorBX3SJxyrQ3cFJrEPFoCrqPxvJSsWUWzhV8KU8btLdr819jdTFcPmaTNdRuLY7M9Jdn21nZr2K1GCzrdMI+tPnD93zUzd9jVFOQPQfLAtrhXQvVfCHPzwT1i8f5Pp+q/2jruQGpDaB2oHmid5uhc+UmDpyofPgBPv+KhJpLwKlD5TBh/T5yqA/247jbIJpzCEQCy+VbPNRn4I6Po8KPxBHGYDa0Sq6zLTOZ6pZa64Yo6SE23DX+9d81zeeU2PGA2pfWUma4gXc+Pn9cJ3IeVDzAchj/cQxRKWl4fu9j6TWcfJWg8bSSShO6Ssih+oT42Ra1kQc=
+  - secure: J7LvSfPGuiCxkEu5EMyW/wbnPsv9k75lCdz/IecVQVfka0fzvf3U2Ky1yR3ikEo64wsnkxQrJcM60wshJWzY/wS0NwzTI9hxsRVmpD1bEZu7AfG63Z9sUElaaDaKoKr1ux1naJTDAC45b4ur3Z+KISM6jZ8mr38iPDvA1YfAy0/91KKZXnbrqCiJg/1nc7MCEHb2Uph5PG8WeA3y86RckIpVT5on4/uwW0Kgp5huOMYFOz6erR/VwPCEklb4OQSqjMtgLpCIOYi9t14SRX/A58mVe2TLdkfPklAXasAlyw2S9lvvBgJnV3E5mpALDZSxLyS1+vC50ftprOB47lkkcQZBBLgpEgLaWJ/ZuI7/+QjyimZhouzFrheC1jg8AUO8vMLehI87oOvFvGJymZEdMv+frW9t1hAg+hPVSERRUhQGWF5+Zu7XDhWn3cSCUa0wdFb61ixUiMz3NnVKuFwayEjLgIzTYHaA5ZbATlJehCVEGFU/ciADT8/lUiwimDUx1cwHhK2kQaioNJxsR5TgnULkZWK0XGPcM16dduy05cY38tVZd/mVRdKr8trd1V4UGvP8e+cDGRm8z09MaSlddOZ8vLJ2YDarFWApB5krl5MAvct/le5iNJ18ZGZySlMzGGrl3hy7dcynM7os9MZu24ylF7dlPnqwv+o1J8GKx4U=
 android:
- components:
- - tools
- - platform-tools
- - build-tools-$ANDROID_BUILD_TOOLS
- - android-$ANDROID_API
- - extra-google-m2repository
- - extra-android-m2repository # for design library
-
+  components:
+  - tools
+  - platform-tools
+  - build-tools-$ANDROID_BUILD_TOOLS
+  - android-$ANDROID_API
+  - extra-google-m2repository
+  - extra-android-m2repository
 before_install:
+- openssl aes-256-cbc -K $encrypted_8af22c44f404_key -iv $encrypted_8af22c44f404_iv
+  -in keystore.jks.enc -out keystore.jks -d
 - mkdir "$ANDROID_HOME/licenses" || true
 - echo -e "\n24333f8a63b6825ea9c5514f83c2829b004d1fee" > "$ANDROID_HOME/licenses/android-sdk-license"
 - chmod +x gradlew
-- ./gradlew dependencies || true
-
+- "./gradlew dependencies || true"
 script:
-  - "./gradlew clean build --stacktrace"
+- "./gradlew clean build --stacktrace"
+before_deploy:
+- "./.travis/sign_apk.sh"
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: "N/RnBEYfnkmuqw0dnpx0qsYYTINwxC/NnuiMeeS+D15/uTa5e/vHIKT0J4wpX3z2wD+d4G51UPNgpI/xA7dHTyfFBeQr09ufGYanzEtL/eXnKc0hOea9FdYYaN95ds8Gvl1MtR7JR4DX1cm0JeAI1UWeQGN1JlMckF3iTUJ7erg1QsmyxMoeDxNn2iTeGIenji2oP+h8rNhMGXMU1vB1mISkX4SiuK4mnTC3ChEyDHU0X4YUx0MV2JQR4gpilyvE4m85cguU3KzikTzD9LLB6+t0j5bMR0sPVTh53u2hRR9jqAiKoiN5q4TibIF9i3I1o4glsTXg8vBTPDtuw5W7fTeXxmBP2l4y2KfzYqeG316VWOZufKcUs30WtRAd6hjJIY5nduhLyd1R3SbiYVwK0k20Ke4K9nFcT+TxCw1d0in4xGGT/U8/KwdTNxJdTd7KOASVyg/WAJN8Bw2jj3c5Xl7nZzy9hRexufNOdGA6OPXQ/eRtmYcUA+URQOMiLKj77WgXYzMRDdY3rLxhLQm2a2utprShrN6K+KnoD8BO5F6GmVwBzWEDwa0m1KOhWiBgavnPHLi8Vq17pE85pljpsjbgdREqGJ/pGqOXoHgDJMa9KIYfchtV9EGzp0KCT9Jrg8m7+BSoer8Z02Bg0ymIq8kcEYZsYqGDFVPH7nm2p3E="
+  file_glob: true
+  file: "the-baby-app-*.apk"
+  on:
+    tags: true
