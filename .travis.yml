@@ -30,3 +30,4 @@ before_install:
 
 script:
   - "./gradlew clean build --stacktrace"
+  - "find . -name '*.apk'"
