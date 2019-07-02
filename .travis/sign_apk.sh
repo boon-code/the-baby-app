@@ -13,7 +13,7 @@ _fail() {
 [ -n "${keystore_password}" ] || _fail "Keystore password not set"
 [ -n "${key_password}" ] || _fail "Key password not set"
 
-cd app/build/outputs/apk/release/
+cd app/build/outputs/apk/release/ || _fail "Couldn't locate release folder"
 funsigned="$(ls ${APP_NAME}-*-release-unsigned.apk)" || _fail "Couldn't find apk"
 fsigned="$(echo "$funsigned" | sed -e 's/\(.*-release\)-unsigned.apk/\1.apk/g')"
 
@@ -29,3 +29,5 @@ jarsigner -verify "$funsigned" || _fail "Verification of $funsigned failed"
 "${ZIPALIGN}" -v 4 "$funsigned" "$fsigned" || _fail "Failed to align signed apk"
 
 cp -v "$fsigned" "${TRAVIS_BUILD_DIR}/$fsigned"
+
+echo "Successfully signed APK: $fsigned"
