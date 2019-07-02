@@ -31,3 +31,6 @@ jarsigner -verify "$funsigned" || _fail "Verification of $funsigned failed"
 cp -v "$fsigned" "${TRAVIS_BUILD_DIR}/$fsigned"
 
 echo "Successfully signed APK: $fsigned"
+
+echo "DEBUG: Clean up keystore"
+rm "${TRAVIS_BUILD_DIR}/keystore.jks"
