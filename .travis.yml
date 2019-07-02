@@ -35,3 +35,9 @@ script:
 - "./gradlew clean build --stacktrace"
 before_deploy:
 - .travis/sign_apk.sh
+deploy:
+  provider: releases
+  api_key:
+    secure: "N/RnBEYfnkmuqw0dnpx0qsYYTINwxC/NnuiMeeS+D15/uTa5e/vHIKT0J4wpX3z2wD+d4G51UPNgpI/xA7dHTyfFBeQr09ufGYanzEtL/eXnKc0hOea9FdYYaN95ds8Gvl1MtR7JR4DX1cm0JeAI1UWeQGN1JlMckF3iTUJ7erg1QsmyxMoeDxNn2iTeGIenji2oP+h8rNhMGXMU1vB1mISkX4SiuK4mnTC3ChEyDHU0X4YUx0MV2JQR4gpilyvE4m85cguU3KzikTzD9LLB6+t0j5bMR0sPVTh53u2hRR9jqAiKoiN5q4TibIF9i3I1o4glsTXg8vBTPDtuw5W7fTeXxmBP2l4y2KfzYqeG316VWOZufKcUs30WtRAd6hjJIY5nduhLyd1R3SbiYVwK0k20Ke4K9nFcT+TxCw1d0in4xGGT/U8/KwdTNxJdTd7KOASVyg/WAJN8Bw2jj3c5Xl7nZzy9hRexufNOdGA6OPXQ/eRtmYcUA+URQOMiLKj77WgXYzMRDdY3rLxhLQm2a2utprShrN6K+KnoD8BO5F6GmVwBzWEDwa0m1KOhWiBgavnPHLi8Vq17pE85pljpsjbgdREqGJ/pGqOXoHgDJMa9KIYfchtV9EGzp0KCT9Jrg8m7+BSoer8Z02Bg0ymIq8kcEYZsYqGDFVPH7nm2p3E="
+  file_glob: true
+  file: the-baby-app-*.apk

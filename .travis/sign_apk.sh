@@ -27,3 +27,5 @@ jarsigner -verbose -sigalg "SHA1withRSA" \
 # Verify
 jarsigner -verify "$funsigned" || _fail "Verification of $funsigned failed"
 "${ZIPALIGN}" -v 4 "$funsigned" "$fsigned" || _fail "Failed to align signed apk"
+
+cp -v "$fsigned" "${TRAVIS_BUILD_DIR}/$fsigned"
