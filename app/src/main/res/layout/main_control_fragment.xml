@@ -22,7 +22,6 @@
 
         <ToggleButton
                 android:id="@+id/toggleButton"
-                android:text="ToggleButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textOff="@string/nurse_stopped"
@@ -44,7 +43,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/divider">
+            app:layout_constraintTop_toBottomOf="@id/divider" android:id="@+id/linearLayout">
 
         <Button
                 android:text="@string/nurse_start"
