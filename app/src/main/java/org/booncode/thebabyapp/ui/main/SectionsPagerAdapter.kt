@@ -17,7 +17,7 @@ private val TAB_TITLES = arrayOf(
  * one of the sections/tabs/pages.
  */
 class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm) {
-    val placeholder = arrayOf(
+    private val placeholder = arrayOf(
         MainControlFragment.newInstance(),
         PlaceholderFragment.newInstance(2),
         PlaceholderFragment.newInstance(3)
