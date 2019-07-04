@@ -8,10 +8,10 @@
     -->
 
     <color name="colorPrimary">@color/colorBabyOrange</color>
-    <color name="colorPrimaryDark">#A76E20</color>
+    <color name="colorPrimaryDark">#C74A00</color>
     <color name="colorAccent">#D81B60</color>
 
     <!-- Baby colors for icons -->
     <color name="colorBabyYellow">#E6E822</color>
-    <color name="colorBabyOrange">#E1932D</color>
+    <color name="colorBabyOrange">#FF6600</color>
 </resources>
