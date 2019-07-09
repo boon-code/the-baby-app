@@ -14,4 +14,7 @@
     <!-- Baby colors for icons -->
     <color name="colorBabyYellow">#E6E822</color>
     <color name="colorBabyOrange">#FF6600</color>
+
+    <color name="colorBabyGrey">#8F8F8F</color>
+    <color name="colorBabyGreyOrange">#D17F42</color>
 </resources>

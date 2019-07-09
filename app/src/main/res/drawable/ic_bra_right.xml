@@ -10,7 +10,6 @@
       android:strokeWidth="0.40000001"
       android:fillColor="#000000"
       android:strokeColor="#00000000"
-      android:fillType="nonZero"
       android:fillAlpha="0.9982353"
       android:strokeLineCap="butt"/>
   <path
@@ -20,7 +19,6 @@
       android:strokeWidth="0.04231671"
       android:fillColor="#000000"
       android:strokeColor="#00000000"
-      android:fillType="evenOdd"
       android:fillAlpha="1"
       android:strokeLineCap="butt"/>
   <path
@@ -28,9 +26,8 @@
       android:strokeAlpha="0.9982353"
       android:strokeLineJoin="miter"
       android:strokeWidth="0.40000001"
-      android:fillColor="?attr/colorBabyOrange"
+      android:fillColor="@color/colorBabyOrange"
       android:strokeColor="#00000000"
-      android:fillType="nonZero"
       android:fillAlpha="0.9982353"
       android:strokeLineCap="butt"/>
   <path
@@ -38,9 +35,8 @@
       android:strokeAlpha="1"
       android:strokeLineJoin="miter"
       android:strokeWidth="0.04231671"
-      android:fillColor="?attr/colorBabyOrange"
+      android:fillColor="@color/colorBabyOrange"
       android:strokeColor="#00000000"
-      android:fillType="evenOdd"
       android:fillAlpha="1"
       android:strokeLineCap="butt"/>
   <path
