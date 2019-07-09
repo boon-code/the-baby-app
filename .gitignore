@@ -106,5 +106,6 @@ hs_err_pid*
 local.properties
 
 .gradle
+.idea/assetWizardSettings.xml
 
 !gradle/wrapper/*
