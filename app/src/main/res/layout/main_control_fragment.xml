@@ -4,60 +4,114 @@
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.main.MainControlFragment">
-
-    <LinearLayout
-            android:id="@+id/layoutNursing"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-                android:id="@+id/text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Hello"
-                style="@style/TimerFontStyle"/>
-
-        <ToggleButton
-                android:id="@+id/toggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textOff="@string/nurse_stopped"
-                android:textOn="@string/nurse_started"
-                android:checked="false"/>
-
-    </LinearLayout>
+        tools:context=".ui.main.MainControlFragment" android:visibility="visible">
 
     <View
             android:id="@+id/divider"
             android:layout_width="395dp"
             android:layout_height="1dp"
             android:background="?android:attr/colorAccent"
-            app:layout_constraintTop_toBottomOf="@id/layoutNursing"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp"
+    />
 
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
+    <Button
+            android:text="@string/nurse_start"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/divider" android:id="@+id/linearLayout">
+            android:id="@+id/buttonNursingStart"
+            android:layout_weight="1" style="?android:attr/buttonBarButtonStyle"
+            app:layout_constraintStart_toEndOf="@+id/buttonNursingStop" android:layout_marginStart="4dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/currentBoob"/>
+    <Button
+            android:text="@string/nurse_stop"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonNursingStop"
+            android:layout_weight="1"
+            style="?android:attr/buttonBarButtonStyle" android:enabled="false"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toStartOf="@+id/buttonNursingStart"
+            android:layout_marginEnd="4dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/lastBoob"/>
+    <TextView
+            android:text="Start"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/ntStart" android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp" app:layout_constraintEnd_toStartOf="@+id/ntStop"
+            android:layout_marginEnd="4dp" app:layout_constraintTop_toBottomOf="@+id/divider"
+            android:layout_marginTop="8dp"/>
+    <TextView
+            android:text="Stop"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/ntStop" android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
+            app:layout_constraintStart_toEndOf="@+id/ntStart" android:layout_marginStart="4dp"
+            app:layout_constraintTop_toBottomOf="@+id/divider" android:layout_marginTop="8dp"/>
+    <TextView
+            android:text="last Duration"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/ntLastDuration" android:visibility="visible"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/ntStart"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+            android:layout_marginEnd="4dp" app:layout_constraintEnd_toStartOf="@+id/ntDuration"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/ntDuration" android:visibility="visible"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/ntStop"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
+            app:layout_constraintStart_toEndOf="@+id/ntLastDuration" android:layout_marginStart="4dp"/>
+    <View
+            android:id="@+id/divider2"
+            android:layout_width="395dp"
+            android:layout_height="1dp"
+            android:background="?android:attr/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.062" app:layout_constraintTop_toBottomOf="@+id/buttonNursingStart"
+            android:layout_marginTop="12dp"/>
 
-        <Button
-                android:text="@string/nurse_start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/buttonNursingStart"
-                android:layout_weight="1"/>
+    <org.booncode.thebabyapp.ui.main.BraView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginEnd="44dp" app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/currentBoob"
+            app:layout_constraintTop_toBottomOf="@+id/ntDuration"
+            android:layout_marginTop="8dp"
+    />
+    <org.booncode.thebabyapp.ui.main.BraView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/lastBoob"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/ntLastDuration" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/currentBoob"
+            android:layout_marginEnd="8dp" android:layout_marginStart="8dp"/>
+    <TextView
+            android:text="@string/nurse_last_boob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textLastBoob"
+            app:layout_constraintEnd_toStartOf="@+id/lastBoob" android:layout_marginEnd="8dp"
+            app:layout_constraintTop_toTopOf="@+id/lastBoob" app:layout_constraintBottom_toBottomOf="@+id/lastBoob"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.111"
+            app:layout_constraintVertical_bias="0.506" android:layout_marginStart="8dp"/>
+    <TextView
+            android:text="@string/nurse_current_boob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textCurrentBoob" app:layout_constraintStart_toEndOf="@+id/lastBoob"
+            android:layout_marginStart="8dp" app:layout_constraintEnd_toStartOf="@+id/currentBoob"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/currentBoob"
+            app:layout_constraintTop_toTopOf="@+id/currentBoob"/>
 
-        <Button
-                android:text="@string/nurse_stop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/buttonNursingStop"
-                android:layout_weight="1"
-        />
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

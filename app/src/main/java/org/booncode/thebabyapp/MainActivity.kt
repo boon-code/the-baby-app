@@ -8,7 +8,10 @@ import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
 import org.booncode.thebabyapp.ui.main.SectionsPagerAdapter
 
+
 class MainActivity : AppCompatActivity() {
+
+    private val TAG = "TBA.Main"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         val tabs: TabLayout = findViewById(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
         val fab: FloatingActionButton = findViewById(R.id.fab)
+        setSupportActionBar(findViewById(R.id.toolbar))
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)

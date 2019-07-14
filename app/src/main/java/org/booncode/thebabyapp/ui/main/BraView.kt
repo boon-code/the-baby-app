@@ -1,7 +1,6 @@
 package org.booncode.thebabyapp.ui.main
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.AttributeSet
@@ -10,17 +9,14 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import org.booncode.thebabyapp.R
+import org.booncode.thebabyapp.common.*
 
-/** Current state of the view */
-enum class BraState {
-    None, Left, Right, Both
-}
 
 /**
  * TODO: document your custom view class.
  */
 class BraView(context: Context, attrs: AttributeSet? = null) : ImageView(context, attrs) {
-    private val TAG: String = "TheBabyApp.BraView"
+    private val TAG: String = "TBA.BraView"
     private var state: BraState = BraState.None
     private var active: Boolean = true
     private var left: Boolean = false
@@ -54,22 +50,18 @@ class BraView(context: Context, attrs: AttributeSet? = null) : ImageView(context
                 BraState.None -> setImageResource(R.drawable.ic_bra)
                 BraState.Left -> setImageResource(R.drawable.ic_bra_left)
                 BraState.Right -> setImageResource(R.drawable.ic_bra_right)
-                BraState.Both -> setImageResource(R.drawable.ic_bra_both)
             }
         } else {
             when (state) {
                 BraState.None -> setImageResource(R.drawable.ic_bra_disabled)
                 BraState.Left -> setImageResource(R.drawable.ic_bra_disabled_left)
                 BraState.Right -> setImageResource(R.drawable.ic_bra_disabled_right)
-                BraState.Both -> setImageResource(R.drawable.ic_bra_disabled_both)
             }
         }
     }
 
     private fun selectionToState(): BraState {
-        if (left && right) {
-            return BraState.Both
-        } else if (left) {
+        if (left) {
             return BraState.Left
         } else if (right) {
             return BraState.Right
@@ -84,19 +76,21 @@ class BraView(context: Context, attrs: AttributeSet? = null) : ImageView(context
         when (requestedState) {
             BraState.Left -> left = true
             BraState.Right -> right = true
-            BraState.Both -> { left = true; right = true }
+            BraState.None -> {}
         }
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         Log.d(TAG, "Got a touch event: ${event?.action}, clickable: ${isClickable}")
-        if ((event?.action == MotionEvent.ACTION_DOWN) && isClickable) {
+        if ((event?.action == MotionEvent.ACTION_DOWN) && isClickable && isActive) {
             if (event.x > (this.width / 2)) {
                 Log.d(TAG, "Left Boob")
                 left = !left
+                right = false
             } else {
                 Log.d(TAG, "Right Boob")
                 right = !right
+                left = false
             }
             changeBraState(selectionToState())
         }
@@ -112,13 +106,17 @@ class BraView(context: Context, attrs: AttributeSet? = null) : ImageView(context
 
     override fun onRestoreInstanceState(state: Parcelable?) {
         if (state is SavedBraState) {
+            super.onRestoreInstanceState(state.superState)
+            isActive = state.isActive
+            braState = state.braState
+        } else {
+            super.onRestoreInstanceState(state)
         }
-        super.onRestoreInstanceState(state)
     }
 
     /** Implement Parcelable interface */
     internal class SavedBraState : View.BaseSavedState {
-        val TAG = "BraState"
+        val TAG = "TBA.BraState"
         private val byte0 = 0.toByte()
         private val byte1 = 1.toByte()
 
@@ -132,13 +130,11 @@ class BraView(context: Context, attrs: AttributeSet? = null) : ImageView(context
 
         constructor(source: Parcel) : super(source) {
             active = source.readByte()
-            val name = source.readString()
+            val stateValue = source.readInt()
             try {
-                if (name != null) {
-                    braState = BraState.valueOf(name)
-                }
-            } catch (e: java.lang.IllegalArgumentException) {
-                Log.d(TAG, "Ignore illegal braState: ${name}")
+                braState = BraState.from(stateValue)
+            } catch (e: IllegalArgumentException) {
+                Log.d(TAG, "Ignore illegal braState: ${stateValue}")
             }
         }
 
@@ -147,7 +143,7 @@ class BraView(context: Context, attrs: AttributeSet? = null) : ImageView(context
         override fun writeToParcel(parcel: Parcel, flags: Int) {
             super.writeToParcel(parcel, flags)
             parcel.writeByte(active)
-            parcel.writeString(braState.name)
+            parcel.writeInt(braState.getValue())
         }
 
         override fun describeContents(): Int {
