@@ -3,8 +3,15 @@
     <string name="tab1_title">Main</string>
     <string name="tab2_title">Nursing times</string>
     <string name="tab3_title">Diaper changes</string>
-    <string name="nurse_started">Started</string>
-    <string name="nurse_stopped">Stopped</string>
     <string name="nurse_start">Start</string>
-    <string name="nurse_stop">Stop</string>
+    <string name="nurse_stop">Stop and save</string>
+    <string name="nurse_current_boob">Current:</string>
+    <string name="nurse_last_boob">Last:</string>
+    <string name="nurse_dialog_title">Really stop and save?</string>
+    <string name="nurse_dialog_positive">Stop and save</string>
+    <string name="nurse_dialog_negative">Cancel</string>
+    <string name="nurse_dlg_discard_title">Discard nursing timer</string>
+    <string name="nurse_dlg_discard_positive">Discard timer</string>
+    <string name="nurse_dlg_discard_negative">Cancel</string>
+    <string name="action_nt_clear_timer_title">Discard timer</string>
 </resources>
