@@ -38,6 +38,7 @@ class MainControlFragment : Fragment() {
     private var ntStart: TextView? = null
     private var ntStop: TextView? = null
     private var ntLastDuration: TextView? = null
+    private var ntDuration: TextView? = null
 
     private val stopWatch = StopWatch(100)
 
@@ -160,11 +161,16 @@ class MainControlFragment : Fragment() {
 
         lastBraView?.braState = if (lastSavedEntry != null) lastSavedEntry!!.braSide else BraState.None
 
-        if (!running) {
-            ntStart?.text = ""
-            ntStop?.text = ""
+        if (lastSavedEntry != null) {
+            if (!running) {
+                val strStart = TIME_FORMAT.format(Date(lastSavedEntry!!.start))
+                val strStop = TIME_FORMAT.format(Date(lastSavedEntry!!.stop))
+                ntStart?.text = "Start: ${strStart}"
+                ntStop?.text = "Start: ${strStop}"
+                ntDuration?.text = ""
+            }
+            ntLastDuration?.text = fmtDuration("Last Duration: ", lastSavedEntry!!.duration)
         }
-        ntLastDuration?.text = if (lastSavedEntry != null) fmtDuration("Last Duration: ", lastSavedEntry!!.duration) else ""
     }
 
     override fun onCreateView(
@@ -182,7 +188,7 @@ class MainControlFragment : Fragment() {
         buttonNurseStop = root.findViewById<Button>(R.id.buttonNursingStop)
         buttonNurseStop!!.setOnClickListener { stopNursing() }
 
-        val ntDuration = root.findViewById<TextView>(R.id.ntDuration)
+        ntDuration = root.findViewById<TextView>(R.id.ntDuration)
         stopWatch.duration.observe(this, Observer<Long> {
             if (currentState == State.RUNNING) {
                 val now = Date(System.currentTimeMillis())
@@ -190,8 +196,8 @@ class MainControlFragment : Fragment() {
                 val strStart = TIME_FORMAT.format(Date(currentEntry!!.start))
                 ntStart?.text = "Start: ${strStart}"
                 ntStop?.text = "Stop: ${strStop}"
+                ntDuration?.text = fmtDuration("Duration: ", it)
             }
-            ntDuration.text = fmtDuration("Duration: ", it)
         })
 
         currentBraView = root.findViewById<BraView>(R.id.currentBoob)
