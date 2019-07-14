@@ -7,7 +7,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatImageView
 import org.booncode.thebabyapp.R
 import org.booncode.thebabyapp.common.*
 
@@ -15,7 +15,9 @@ import org.booncode.thebabyapp.common.*
 /**
  * TODO: document your custom view class.
  */
-class BraView(context: Context, attrs: AttributeSet? = null) : ImageView(context, attrs) {
+class BraView(context: Context, attrs: AttributeSet? = null)
+    : AppCompatImageView(context, attrs) {
+
     private val TAG: String = "TBA.BraView"
     private var state: BraState = BraState.None
     private var active: Boolean = true
