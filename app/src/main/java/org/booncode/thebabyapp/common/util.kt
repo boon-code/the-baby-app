@@ -20,7 +20,7 @@ inline fun <reified T, V> fromEnum(value: V): T
 }
 
 
-inline fun formatDuration(millis: Long): String {
+fun formatDuration(millis: Long): String {
     val seconds: Long = millis / 1000
     val minutesString = "%02d".format((seconds / 60))
     val secondsString = "%02d".format((seconds % 60))

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import org.booncode.thebabyapp.R
+import org.booncode.thebabyapp.ui.ntl.NursingTimeFragment
 
 private val TAB_TITLES = arrayOf(
     R.string.tab1_title,
@@ -19,9 +20,8 @@ private val TAB_TITLES = arrayOf(
 class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm) {
     private val placeholder = arrayOf(
         MainControlFragment.newInstance(),
-        PlaceholderFragment.newInstance(2),
+        NursingTimeFragment.newInstance(),
         PlaceholderFragment.newInstance(3)
-
     )
 
     override fun getItem(position: Int): Fragment {

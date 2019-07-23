@@ -5,7 +5,6 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.os.strictmode.SqliteObjectLeakedViolation
 import android.util.Log
 import org.booncode.thebabyapp.common.*
 import java.lang.IllegalArgumentException
@@ -33,6 +32,20 @@ data class NursingEntry(var braSide: BraState = BraState.None,
 class NursingDatabase(context: Context,
                       factory: SQLiteDatabase.CursorFactory?) :
         SQLiteOpenHelper(context, DB_NAME, factory, DB_VERSION) {
+
+    private var savedEntryListener: OnSavedEntryListener? = null
+
+    interface OnSavedEntryListener {
+        fun onSavedEntry()
+    }
+
+    fun setOnSavedEntryListener(listener: OnSavedEntryListener?) {
+        savedEntryListener = listener
+    }
+
+    init {
+        dbInstances.add(this)
+    }
 
     override fun onCreate(db: SQLiteDatabase?) {
         Log.d(TAG, "Database created")
@@ -128,6 +141,7 @@ class NursingDatabase(context: Context,
                         entry.duration = duration
                     }
                     entry.state = NursingState.SAVED
+                    onSavedEntry()
                 }
 
                 else -> { }
@@ -145,7 +159,6 @@ class NursingDatabase(context: Context,
 
     private fun queryEntry(cursor: Cursor): NursingEntry? {
         try {
-            Log.d(TAG, "Column count: ${cursor.columnCount}")
             if (cursor.count == 0) {
                 return null
             } else {
@@ -168,6 +181,16 @@ class NursingDatabase(context: Context,
         } finally {
             db.close()
         }
+    }
+
+    fun getSavedEntries(): Cursor {
+        val db = this.readableDatabase
+        return db.rawQuery("""
+                SELECT * from ${NursingEntry.TABLE}
+                WHERE ${NursingEntry.STATE} = ?
+                ORDER BY ${NursingEntry.ID}
+                DESC
+            """.trimIndent(), arrayOf(NursingState.SAVED.value.toString()))
     }
 
     fun getUnfinishedEntry(): NursingEntry {
@@ -204,10 +227,21 @@ class NursingDatabase(context: Context,
         """.trimIndent(), null)
     }
 
+    protected fun finalize() {
+        dbInstances.remove(this)
+    }
+
     companion object {
         private val DB_NAME = "NursingDB"
         private val DB_VERSION = 1
         private val TAG = "TBA.NursingDB"
+        private val dbInstances = mutableListOf<NursingDatabase>()
+
+        private fun onSavedEntry() {
+            dbInstances.forEach {
+                it.savedEntryListener?.onSavedEntry()
+            }
+        }
 
         fun toNursingEntry(cursor: Cursor): NursingEntry {
             val braSideIdx = cursor.getColumnIndexOrThrow(NursingEntry.BRA_SIDE)
@@ -216,8 +250,6 @@ class NursingDatabase(context: Context,
             val durationIdx = cursor.getColumnIndexOrThrow(NursingEntry.DURATION)
             val stateIdx = cursor.getColumnIndexOrThrow(NursingEntry.STATE)
             val idIdx = cursor.getColumnIndexOrThrow(NursingEntry.ID)
-
-            Log.d(TAG, "Indices: $braSideIdx, $startIdx, $stopIdx, $durationIdx, $stateIdx, $idIdx")
 
             return NursingEntry(
                 braSide = BraState.from(cursor.getInt(braSideIdx)),
