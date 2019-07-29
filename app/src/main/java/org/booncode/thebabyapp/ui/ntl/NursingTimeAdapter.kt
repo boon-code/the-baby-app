@@ -50,11 +50,11 @@ class NursingTimeAdapter(
         when (entry.braSide) {
             BraState.Right -> {
                 holder.mSide.text = "Right"
-                holder.mSideImage.setImageResource(R.drawable.ic_bra_right)
+                holder.mSideImage.setImageResource(R.drawable.ic_bra_disabled_right)
             }
             BraState.Left -> {
                 holder.mSide.text = "Left"
-                holder.mSideImage.setImageResource(R.drawable.ic_bra_left)
+                holder.mSideImage.setImageResource(R.drawable.ic_bra_disabled_left)
             }
             else -> {
                 holder.mSide.text = "Invalid"
