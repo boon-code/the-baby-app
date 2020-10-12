@@ -1,7 +1,7 @@
 The Baby App
 ============
 
-[![Build Status](https://travis-ci.org/boon-code/the-baby-app.svg)](https://travis-ci.org/boon-code/the-baby-app)
+[![Build Status](https://travis-ci.com/boon-code/the-baby-app.svg)](https://travis-ci.com/boon-code/the-baby-app)
 
 Application to track nursing periods and number (and time) of diaper changes.
 
