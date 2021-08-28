@@ -1,7 +1,7 @@
 The Baby App
 ============
 
-[![Build Status](https://travis-ci.com/boon-code/the-baby-app.svg)](https://travis-ci.com/boon-code/the-baby-app)
+[![Build Status](https://api.travis-ci.com/boon-code/the-baby-app.svg)](https://app.travis-ci.com/github/boon-code/the-baby-app)
 [![GitHub Release Date](https://img.shields.io/github/release-date/boon-code/the-baby-app)](https://github.com/boon-code/the-baby-app/releases/latest)
 [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/boon-code/the-baby-app?sort=semver)](https://github.com/boon-code/the-baby-app/releases/latest)
 
